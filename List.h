@@ -46,9 +46,10 @@ public:
 
     };
 
+    /********************* Contenu de List **********************/
 private:
     size_t nbElements;
-    Node *head;
+    Node* head;
     Node *queue;
 
     /**
@@ -210,9 +211,19 @@ public:
      *
      * @param o     Elément à vérifier
      */
-    // TODO
+    // TODO: not finished
     void remove(const T& o) {
+        Node *current = head;
 
+        while (current) {
+            if(current->data != o) {
+                current = current->next;
+                continue;
+            }
+
+            // L'élément a été trouvé
+
+        }
     }
 
     /**
