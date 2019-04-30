@@ -126,14 +126,13 @@ public:
      *
      * @param o     L'élément à ajouter
      */
-    // TODO
     void insert(const T& o) {
         Node *newHead = new Node(o, nullptr, head);
 
+        // On vérifie si il y a déjà des éléments dans la liste
         if (head) {
             head->previous = newHead;
         } else {
-            // C'est le premier élément qu'on ajoute dans la liste
             queue = newHead;
         }
 
@@ -146,10 +145,17 @@ public:
      *
      * @param o     L'élément à ajouter
      */
-    // TODO
     void append(const T& o) {
+        Node *newQueue = new Node(o, queue, nullptr);
 
+        // On vérifie si il y a déjà des éléments dans la liste
+        if (queue) {
+            queue->next = newQueue;
+        } else {
+            head = newQueue;
+        }
 
+        queue = newQueue;
         ++nbElements;
     }
 
