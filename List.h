@@ -7,6 +7,7 @@
 #include <initializer_list>
 #include <cstdio>
 #include <iosfwd>
+#include <stdexcept>
 
 template <typename T>
 class List {
@@ -201,9 +202,45 @@ public:
      *
      * @param index     Index de l'élément à supprimer
      */
-    // TODO
+    // TODO: Pas sur que ça marche ? => A TESTER
     void removeAt(size_t index) {
+        Node *current;
 
+        if (nbElements == 0) {
+            throw std::runtime_error("The list is empty.");
+        }
+
+        if(index >= nbElements){
+            throw std::invalid_argument("Index is out of bounds.");
+        }
+
+        // On veut supprimer la tête
+        if (index == 0) {
+            current = head;
+            head = head->next;
+
+            delete current;
+            --nbElements;
+            return;
+        }
+
+        // On crée un noeud qui est avant le début de la liste
+        *current = Node(nullptr, nullptr, head);// TODO: => Memory Leak ???
+
+        for(size_t i = 0; i <= index; ++i) {
+            current = current->next;
+        }
+
+        current->prev->next = current->next;
+
+        if(current == queue) {
+            queue = current->next;
+        } else {
+            current->next->prev = current->prev;
+        }
+
+        delete current;
+        --nbElements;
     }
 
     /**
@@ -211,36 +248,12 @@ public:
      *
      * @param o     Elément à vérifier
      */
-    // TODO: not finished
+    // TODO: Pas sur que ça marche ? => A TESTER
     void remove(const T& o) {
-        Node *current = head;
-        Node *tmp;
+        int index;
 
-        while (current) {
-            if(current->data != o) {
-                current = current->next;
-                continue;
-            }
-
-            // L'élément a été trouvé
-            if (current->prev) {
-                current->prev->next = current->next;
-            }
-
-            if (current->next) {
-                current->next->prev = current->prev;
-            }
-
-            if (current == head) {
-                if(nbElements == 1) {
-                    head = nullptr;
-                    queue = nullptr;
-                } else {
-                    head = current->next;
-                }
-            } else if (current == queue) {
-                queue = current->prev;
-            }
+        while ((index = find(o)) != -1) {
+            removeAt((size_t) index);
         }
     }
 
@@ -279,6 +292,7 @@ public:
      *
      * @return      Itérateur constant pointant sur le dernier élément de la liste
      */
+    // TODO
     ConstIterator end() const;
 
     /**
@@ -290,9 +304,20 @@ public:
      * @return      Indice du premier élément trouvé au format size_t, retourne -1 si
      *              l'élément n'est pas dans la liste
      */
-    // TODO
     int find(const T& o) const {
+        Node *current = head;
+        int index = 0;
 
+        while (current) {
+            if (current->data = o) {
+                return index;
+            }
+
+            ++index;
+            current = current->next;
+        }
+
+        return -1;
     }
 
     /**
