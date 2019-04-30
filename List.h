@@ -18,14 +18,14 @@ private:
      */
     class Node {
     public:
-        Node *previous;
+        Node *prev;
         Node *next;
         T data;
 
         /**
          * Constructeur
          */
-        Node(const T& data, Node* previous = nullptr, Node* next = nullptr) : previous(previous), next(next), data(data) {}
+        Node(const T& data, Node* prev = nullptr, Node* next = nullptr) : prev(prev), next(next), data(data) {}
     };
 
     // TODO
@@ -167,7 +167,7 @@ public:
 
         // On vérifie si il y a déjà des éléments dans la liste
         if (head) {
-            head->previous = newHead;
+            head->prev = newHead;
         } else {
             queue = newHead;
         }
@@ -213,6 +213,7 @@ public:
     // TODO: not finished
     void remove(const T& o) {
         Node *current = head;
+        Node *tmp;
 
         while (current) {
             if(current->data != o) {
@@ -221,7 +222,24 @@ public:
             }
 
             // L'élément a été trouvé
+            if (current->prev) {
+                current->prev->next = current->next;
+            }
 
+            if (current->next) {
+                current->next->prev = current->prev;
+            }
+
+            if (current == head) {
+                if(nbElements == 1) {
+                    head = nullptr;
+                    queue = nullptr;
+                } else {
+                    head = current->next;
+                }
+            } else if (current == queue) {
+                queue = current->prev;
+            }
         }
     }
 
