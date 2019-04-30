@@ -10,6 +10,42 @@
 
 template <typename T>
 class List {
+
+    /********************** Classes internes **********************/
+private:
+
+    /**
+     * Noeud de la liste, contient une référence vers le noeud précédant et suivant dans la liste
+     */
+    class Node {
+    public:
+        Node *previous;
+        Node *next;
+        T data;
+
+        /**
+         * Constructeur
+         */
+        Node(const T& data, Node* previous = nullptr, Node* next = nullptr) : previous(previous), next(next), data(data) {}
+    };
+
+    // TODO
+    class GenericIterator {
+
+    };
+
+public:
+
+    // TODO
+    class Iterator : public GenericIterator {
+
+    };
+
+    // TODO
+    class ConstIterator : public GenericIterator {
+
+    };
+
 private:
     size_t nbElements;
     Node *head;
@@ -241,38 +277,4 @@ public:
     friend std::ostream& operator << (std::ostream& os, const List& list) {
 
     }
-
-    /********************** Classes internes **********************/
-private:
-    /**
-     * Noeud de la liste, contient une référence vers le noeud précédant et suivant dans la liste
-     */
-    class Node {
-    public:
-        Node *previous;
-        Node *next;
-        T data;
-
-        /**
-         * Constructeur
-         */
-        Node(const T& data, Node* previous = nullptr, Node* next = nullptr) : previous(previous), next(next), data(data) {}
-    };
-
-    // TODO
-    class GenericIterator {
-
-    };
-
-public:
-
-    // TODO
-    class Iterator : public GenericIterator {
-
-    };
-
-    // TODO
-    class ConstIterator : public GenericIterator {
-
-    };
 };
