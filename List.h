@@ -10,9 +10,45 @@
 
 template <typename T>
 class List {
+
+    /********************** Classes internes **********************/
+private:
+    /**
+     * Noeud de la liste, contient une référence vers le noeud précédant et suivant dans la liste
+     */
+    class Node {
+    public:
+        Node *previous;
+        Node *next;
+        T data;
+
+        /**
+         * Constructeur
+         */
+        Node(const T& data, Node* previous = nullptr, Node* next = nullptr) : previous(previous), next(next), data(data) {}
+    };
+
+    // TODO
+    class GenericIterator {
+
+    };
+
+public:
+
+    // TODO
+    class Iterator : public GenericIterator {
+
+    };
+
+    // TODO
+    class ConstIterator : public GenericIterator {
+
+    };
+
+    /********************* Contenu de List **********************/
 private:
     size_t nbElements;
-    Node *head;
+    Node* head;
     Node *queue;
 
     /**
@@ -174,9 +210,19 @@ public:
      *
      * @param o     Elément à vérifier
      */
-    // TODO
+    // TODO: not finished
     void remove(const T& o) {
+        Node *current = head;
 
+        while (current) {
+            if(current->data != o) {
+                current = current->next;
+                continue;
+            }
+
+            // L'élément a été trouvé
+
+        }
     }
 
     /**
@@ -242,37 +288,5 @@ public:
 
     }
 
-    /********************** Classes internes **********************/
-private:
-    /**
-     * Noeud de la liste, contient une référence vers le noeud précédant et suivant dans la liste
-     */
-    class Node {
-    public:
-        Node *previous;
-        Node *next;
-        T data;
 
-        /**
-         * Constructeur
-         */
-        Node(const T& data, Node* previous = nullptr, Node* next = nullptr) : previous(previous), next(next), data(data) {}
-    };
-
-    // TODO
-    class GenericIterator {
-
-    };
-
-public:
-
-    // TODO
-    class Iterator : public GenericIterator {
-
-    };
-
-    // TODO
-    class ConstIterator : public GenericIterator {
-
-    };
 };
