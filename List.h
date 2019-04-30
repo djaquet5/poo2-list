@@ -13,6 +13,7 @@ class List {
 
     /********************** Classes internes **********************/
 private:
+
     /**
      * Noeud de la liste, contient une référence vers le noeud précédant et suivant dans la liste
      */
@@ -305,6 +306,4 @@ public:
     friend std::ostream& operator << (std::ostream& os, const List& list) {
 
     }
-
-
 };
