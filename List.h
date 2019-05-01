@@ -75,7 +75,6 @@ private:
         }
 
     private:
-
         void checkBound(Node* node) {
             if(!node) {
                 throw std::out_of_range("Iterator out of range");
@@ -165,7 +164,6 @@ public:
         T operator * () const {
             return GenericIterator::current->data;
         }
-
 
         T const * operator -> () const {
             return &(GenericIterator::current->data);
@@ -635,7 +633,7 @@ public:
             os << current->data;
             current = current->next;
         }
-        os << ")";
+        os <<")";
 
         return os;
     }
