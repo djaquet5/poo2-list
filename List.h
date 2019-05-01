@@ -17,6 +17,7 @@
 #include <cstdio>
 #include <iosfwd>
 #include <stdexcept>
+#include <iostream>
 
 /**
  * Spécification d'une classe List personalisée
@@ -46,7 +47,7 @@ private:
 
     // TODO
     class GenericIterator {
-    private:
+    protected:
         Node *current;
     public:
         GenericIterator(Node& node) : current(&node) {}
@@ -134,7 +135,8 @@ public:
 
     // TODO
     class Iterator : public GenericIterator {
-
+        Iterator(Node* node) {
+        };
     };
 
     // TODO
@@ -191,13 +193,13 @@ public:
     /**
      * Constructeur vide
      */
-    List() : nbElements(0), head(nullptr) {}
+    List() : nbElements(0), head(nullptr), queue(nullptr) {}
 
     /**
      * Constructeur avec liste d'initialiseurs
      * @param values    List d'initialiseurs
      */
-    List(std::initializer_list<T> values) : nbElements(values.size()) {
+    List(std::initializer_list<T> values) : head(nullptr), queue(nullptr), nbElements(0) {
         for(auto it = values.begin(); it != values.end(); ++it) {
             append(*it);
         }
@@ -207,25 +209,20 @@ public:
      * Constructeur de copie
      * @param o     Liste à copier
      */
-    List(const List<T>& o) : nbElements(o.nbElements) {
+    List(const List<T>& o) : nbElements(0), head(nullptr), queue(nullptr) {
         Node *otherCurrent;
 
         if (!o.head) {
-            head = nullptr;
-            queue = nullptr;
             return;
         }
 
-        head = new Node(o.head->data, nullptr, o.head->next);
         otherCurrent = o.head;
 
-        while (otherCurrent->next) {
-            otherCurrent = otherCurrent->next;
-
+        while (otherCurrent) {
             append(otherCurrent->data);
-        }
 
-        queue = otherCurrent;
+            otherCurrent = otherCurrent->next;
+        }
     }
 
     /**

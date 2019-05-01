@@ -27,11 +27,35 @@ void codeDonnee() {
 
 int main() {
 //    codeDonnee();
-
     List<int> listeVide;
 
+    listeVide.append(1);
+    listeVide.append(2);
+    listeVide.append(3);
+    listeVide.append(4);
+    listeVide.append(5);
 
+    cout << listeVide.size() << endl;
 
+    List<int> listeCopie(listeVide);
+    cout << listeCopie.size() << endl;
+
+    listeCopie.insert(6);
+    List<int> listeEgal = listeCopie;
+
+    cout << listeCopie.size() << endl;
+    cout << listeEgal.size() << endl;
+
+    listeEgal.append(7);
+
+    cout << listeEgal.size() << endl;
+
+    List<int> listeAssign;
+    listeAssign.assign(listeEgal);
+    listeAssign.append(8);
+
+    cout << listeAssign.size() << endl;
+    cout << listeEgal.size() << endl;
 
     return EXIT_SUCCESS;
 }
