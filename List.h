@@ -57,6 +57,20 @@ private:
      * Ré-initialise la liste
      */
     void clear() {
+        Node* currentHead;
+
+        while(head) {
+            currentHead = head->next;
+            delete head;
+
+            head = currentHead;
+        }
+
+        nbElements = 0;
+    }
+
+    /*
+    void clear() {
         Node *currentHead;
 
         while(head){
@@ -69,6 +83,7 @@ private:
         head = nullptr;
         nbElements = 0;
     }
+     */
 
 
     void isIndexValid(size_t index) {
@@ -87,9 +102,10 @@ public:
      * Constructeur avec liste d'initialiseurs
      * @param values    List d'initialiseurs
      */
-    // TODO
     List(std::initializer_list<T> values) : nbElements(values.size()) {
-
+        for(auto it = values.begin(); it != values.end(); ++it) {
+            append(*it);
+        }
     }
 
     /**
@@ -342,7 +358,7 @@ public:
         int index = 0;
 
         while (current) {
-            if (current->data = o) {
+            if (current->data = o) { // TODO == ???
                 return index;
             }
 
