@@ -51,52 +51,6 @@ private:
     public:
         GenericIterator(Node& node) : current(&node) {}
 
-        /**
-         * Surcharge de l'opérateur ++ en préfixe.
-         * Utilisation : ++it, où it est l'itérateur
-         *
-         * @return      Nouvel élément pointé par l'itérateur
-         */
-        // TODO: voir dans méthode
-        GenericIterator& operator ++ () {
-            // TODO: déplacer l'itérateur ici
-
-            return *this;
-        }
-
-        /**
-         * Surcharge de l'opérateur ++ en suffixe.
-         * Utilisation : it++, où it est l'itérateur
-         *
-         * @return      Elément anciennement pointé
-         */
-        // TODO
-        GenericIterator operator ++ (int) {
-
-        }
-
-        /**
-         * Surcharge de l'opérateur -- en préfixe.
-         * Utilisation : --it, où it est l'itérateur
-         *
-         * @return      Nouvel élément pointé par l'itérateur
-         */
-        // TODO
-        GenericIterator& operator -- () {
-
-        }
-
-        /**
-         * Surcharge de l'opérateur -- en suffixe.
-         * Utilisation : it--, où it est l'itérateur
-         *
-         * @return      Elément anciennement pointé
-         */
-        // TODO
-        GenericIterator operator -- (int) {
-
-        }
-
         // TODO: operator *
         T& operator * () {
 
@@ -135,17 +89,63 @@ public:
     // TODO
     class Iterator : public GenericIterator {
 
+        /**
+         * Surcharge de l'opérateur ++ en préfixe.
+         * Utilisation : ++it, où it est l'itérateur
+         *
+         * @return      Nouvel élément pointé par l'itérateur
+         */
+        // TODO: voir dans méthode
+        GenericIterator& operator ++ () {
+            // TODO
+
+            return *this;
+        }
+
+        /**
+         * Surcharge de l'opérateur -- en préfixe.
+         * Utilisation : --it, où it est l'itérateur
+         *
+         * @return      Nouvel élément pointé par l'itérateur
+         */
+        // TODO
+        GenericIterator& operator -- () {
+
+        }
+
     };
 
     // TODO
     class ConstIterator : public GenericIterator {
+
+        /**
+         * Surcharge de l'opérateur ++ en suffixe.
+         * Utilisation : it++, où it est l'itérateur
+         *
+         * @return      Elément anciennement pointé
+         */
+        // TODO
+        GenericIterator operator ++ (int) {
+
+        }
+
+        /**
+         * Surcharge de l'opérateur -- en suffixe.
+         * Utilisation : it--, où it est l'itérateur
+         *
+         * @return      Elément anciennement pointé
+         */
+        // TODO
+        GenericIterator operator -- (int) {
+
+        }
 
     };
 
     /********************* Contenu de List **********************/
 private:
     size_t nbElements;
-    Node* head;
+    Node *head;
     Node *queue;
 
     /**
