@@ -220,7 +220,7 @@ public:
 
     /********************* Contenu de List **********************/
 private:
-    size_t nbElements;
+    size_t length;
     Node *head;
     Node *last;
     Node *beforeHead;
@@ -239,7 +239,15 @@ private:
             head = currentHead;
         }
         last = nullptr;
-        nbElements = 0;
+        length = 0;
+
+        if (beforeHead) {
+            delete beforeHead;
+        }
+
+        if (afterLast) {
+            delete afterLast;
+        }
     }
 
     /**
@@ -249,7 +257,7 @@ private:
      * @param index     Index à vérifier
      */
     void isIndexValid(size_t index) const {
-        if (index >= nbElements) {
+        if (index >= length) {
             throw std::out_of_range("Index out of range");
         }
     }
@@ -259,9 +267,14 @@ private:
             return;
         }
 
-        beforeHead->data = head->data;
-        beforeHead->next;
-        beforeHead->prev = nullptr;
+        if (beforeHead) {
+            beforeHead->data = head->data;
+
+            beforeHead->next = head->next;
+            beforeHead->prev = nullptr;
+        } else {
+            beforeHead = new Node(head->data, nullptr, head->next);
+        }
 
         head->prev = beforeHead;
     }
@@ -271,11 +284,21 @@ private:
             return;
         }
 
-        afterLast->data = last->data;
-        afterLast->prev = last->prev;
-        afterLast->next = nullptr;
+        if (afterLast) {
+            afterLast->data = last->data;
+
+            afterLast->prev = last->prev;
+            afterLast->next = nullptr;
+        } else {
+            afterLast = new Node(last->data, last->prev);
+        }
 
         last->next = afterLast;
+    }
+
+    void initSentinels() {
+        initBeforeHead();
+        initAfterLast();
     }
 
 public:
@@ -283,19 +306,18 @@ public:
     /**
      * Constructeur vide
      */
-    List() : nbElements(0), head(nullptr), last(nullptr) {}
+    List() : length(0), head(nullptr), last(nullptr), beforeHead(nullptr), afterLast(nullptr) {}
 
     /**
      * Constructeur avec liste d'initialiseurs
      * @param values    List d'initialiseurs
      */
-    List(std::initializer_list<T> values) : nbElements(0), head(nullptr), last(nullptr) {
+    List(std::initializer_list<T> values) : List() {
         for(auto it = values.begin(); it != values.end(); ++it) {
             append(*it);
         }
 
-//        initBeforeHead();
-//        initAfterLast();
+        initSentinels();
     }
 
     /**
@@ -303,7 +325,7 @@ public:
      * @param o     Liste à copier
      */
     // TODO: Utiliser iterateur
-    List(const List<T>& o) : nbElements(0), head(nullptr), last(nullptr) {
+    List(const List<T>& o) : List() {
         Node *otherCurrent;
 
         if (!o.head) {
@@ -312,11 +334,13 @@ public:
 
         otherCurrent = o.head;
 
-        while (otherCurrent) {
+        while (otherCurrent && otherCurrent != o.afterLast) {
             append(otherCurrent->data);
 
             otherCurrent = otherCurrent->next;
         }
+
+        initSentinels();
     }
 
     /**
@@ -342,7 +366,8 @@ public:
 
             last = tmp.last;
 
-            nbElements = o.nbElements;
+            length = o.length;
+            initSentinels();
         }
 
         return *this;
@@ -425,7 +450,7 @@ public:
      * @return  Taille de la liste en int
      */
     size_t size() const {
-        return nbElements;
+        return length;
     }
 
     /**
@@ -444,7 +469,9 @@ public:
         }
 
         head = newHead;
-        ++nbElements;
+        initSentinels();
+
+        ++length;
     }
 
     /**
@@ -463,7 +490,9 @@ public:
         }
 
         last = newQueue;
-        ++nbElements;
+        initSentinels();
+
+        ++length;
     }
 
     /**
@@ -485,7 +514,8 @@ public:
             head = head->next;
 
             delete current;
-            --nbElements;
+            --length;
+            initSentinels();
 
             return;
         }
@@ -503,7 +533,8 @@ public:
         }
 
         delete current;
-        --nbElements;
+        --length;
+        initSentinels();
     }
 
     /**
@@ -596,7 +627,7 @@ public:
         Node *current = list.head;
 
         os << "(";
-        for(size_t i = 0; i < list.nbElements; ++i) {
+        for(size_t i = 0; i < list.length; ++i) {
             if (i) {
                 os << ", ";
             }
