@@ -52,16 +52,6 @@ private:
     public:
         GenericIterator(Node& node) : current(&node) {}
 
-        // TODO: operator *
-        T& operator * () {
-
-        }
-
-        // TODO: operator ->, type = Node ????
-        Node* operator -> () const {
-
-        }
-
         /**
          * Surcharge de l'opérateur !=
          * Les itérateurs sont égaux si ils pointent sur le même noeud
@@ -83,6 +73,25 @@ private:
         bool operator != (const GenericIterator& o) const {
             return !(*this == o);
         }
+
+    private:
+
+        void checkBound(Node* node) {
+            if(!node) {
+                throw std::out_of_range("Iterator out of range");
+            }
+        }
+
+    protected:
+        void inc() {
+            checkBound(current->next);
+            current = current->next;
+        }
+
+        void dec() {
+            checkBound(current->prev);
+            current = current->prev;
+        }
     };
 
 public:
@@ -90,16 +99,25 @@ public:
     // TODO
     class Iterator : public GenericIterator {
 
+        Iterator(Node& node) : GenericIterator(node) {};
+
+        T& operator * () const {
+            return GenericIterator::current->data;
+        }
+
+
+        T* operator -> () const {
+            return &(GenericIterator::current->data);
+        }
+
         /**
          * Surcharge de l'opérateur ++ en préfixe.
          * Utilisation : ++it, où it est l'itérateur
          *
          * @return      Nouvel élément pointé par l'itérateur
          */
-        // TODO: voir dans méthode
-        GenericIterator& operator ++ () {
-            // TODO
-
+        Iterator& operator ++ () {
+            GenericIterator::inc();
             return *this;
         }
 
@@ -109,14 +127,10 @@ public:
          *
          * @return      Nouvel élément pointé par l'itérateur
          */
-        // TODO
-        GenericIterator& operator -- () {
-
+        Iterator& operator -- () {
+            GenericIterator::dec();
+            return *this;
         }
-    };
-
-    // TODO
-    class ConstIterator : public GenericIterator {
 
         /**
          * Surcharge de l'opérateur ++ en suffixe.
@@ -124,9 +138,10 @@ public:
          *
          * @return      Elément anciennement pointé
          */
-        // TODO
-        GenericIterator operator ++ (int) {
-
+        Iterator operator ++ (int) {
+            Iterator currentIterator(*this);
+            GenericIterator::inc();
+            return currentIterator;
         }
 
         /**
@@ -135,11 +150,72 @@ public:
          *
          * @return      Elément anciennement pointé
          */
-        // TODO
-        GenericIterator operator -- (int) {
+        Iterator operator -- (int) {
+            Iterator currentIterator(*this);
+            GenericIterator::dec();
+            return currentIterator;
+        }
+    };
 
+    // TODO
+    class ConstIterator : public GenericIterator {
+
+        ConstIterator(Node& node) : GenericIterator(node) {};
+
+        T operator * () const {
+            return GenericIterator::current->data;
         }
 
+
+        T const * operator -> () const {
+            return &(GenericIterator::current->data);
+        }
+
+        /**
+         * Surcharge de l'opérateur ++ en préfixe.
+         * Utilisation : ++it, où it est l'itérateur
+         *
+         * @return      Nouvel élément pointé par l'itérateur
+         */
+        ConstIterator& operator ++ () {
+            GenericIterator::inc();
+            return *this;
+        }
+
+        /**
+         * Surcharge de l'opérateur -- en préfixe.
+         * Utilisation : --it, où it est l'itérateur
+         *
+         * @return      Nouvel élément pointé par l'itérateur
+         */
+        ConstIterator& operator -- () {
+            GenericIterator::dec();
+            return *this;
+        }
+
+        /**
+         * Surcharge de l'opérateur ++ en suffixe.
+         * Utilisation : it++, où it est l'itérateur
+         *
+         * @return      Elément anciennement pointé
+         */
+        ConstIterator operator ++ (int) {
+            ConstIterator currentIterator(*this);
+            GenericIterator::inc();
+            return currentIterator;
+        }
+
+        /**
+         * Surcharge de l'opérateur -- en suffixe.
+         * Utilisation : it--, où it est l'itérateur
+         *
+         * @return      Elément anciennement pointé
+         */
+        ConstIterator operator -- (int) {
+            ConstIterator currentIterator(*this);
+            GenericIterator::dec();
+            return currentIterator;
+        }
     };
 
     /********************* Contenu de List **********************/
@@ -162,25 +238,9 @@ private:
 
             head = currentHead;
         }
-
+        last = nullptr;
         nbElements = 0;
     }
-
-    /*
-    void clear() {
-        Node *currentHead;
-
-        while(head){
-            currentHead = head;
-            head = head->next;
-
-            delete currentHead;
-        }
-
-        head = nullptr;
-        nbElements = 0;
-    }
-     */
 
     /**
      * Vérifie si l'index est valide. Autrement, il faut que l'index soit compris
