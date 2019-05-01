@@ -88,7 +88,7 @@ private:
 
     void isIndexValid(size_t index) {
         if (index >= nbElements) {
-
+            throw std::out_of_range("Index out of range");
         }
     }
 public:
