@@ -61,15 +61,21 @@ private:
 
         while(head){
             currentHead = head;
-            delete currentHead;
-
             head = head->next;
+
+            delete currentHead;
         }
 
         head = nullptr;
         nbElements = 0;
     }
 
+
+    void isIndexValid(size_t index) {
+        if (index >= nbElements) {
+
+        }
+    }
 public:
 
     /**
@@ -90,9 +96,25 @@ public:
      * Constructeur de copie
      * @param o     Liste à copier
      */
-    // TODO
-    List(const List<T>& o) {
+    List(const List<T>& o) : nbElements(o.nbElements) {
+        Node *otherCurrent;
 
+        if (!o.head) {
+            head = nullptr;
+            queue = nullptr;
+            return;
+        }
+
+        head = new Node(o.head->data, nullptr, o.head->next);
+        otherCurrent = o.head;
+
+        while (otherCurrent->next) {
+            otherCurrent = otherCurrent->next;
+
+            append(otherCurrent->data);
+        }
+
+        queue = otherCurrent;
     }
 
     /**
@@ -108,10 +130,13 @@ public:
      *
      * @return      Référence sur la liste courante
      */
-    // TODO: Copier chacun des noeuds
     List& assign(const List<T>& o) {
         if (this != &o) {
             clear();
+            List<T> tmp(o);
+
+            head = tmp.head;
+            queue = tmp.head;
 
             nbElements = o.nbElements;
         }
@@ -140,6 +165,10 @@ public:
 
     }
 
+    T get(size_t index) const {
+
+    }
+
     /**
      * Rend l'élément présent à un indice donné
      * @param index     Indice de l'élément à récupérer
@@ -147,6 +176,10 @@ public:
      * @return          Elément voulu
      */
     T& operator [] (size_t index) {
+        return get(index);
+    }
+
+    T operator [] (size_t index) const {
         return get(index);
     }
 
