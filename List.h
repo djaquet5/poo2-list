@@ -45,7 +45,62 @@ private:
 
     // TODO
     class GenericIterator {
+    private:
 
+    public:
+        /**
+         * Surcharge de l'opérateur ++ en préfixe.
+         * Utilisation : ++it, où it est l'itérateur
+         *
+         * @return      Nouvel élément pointé par l'itérateur
+         */
+        // TODO: voir dans méthode
+        GenericIterator& operator ++ () {
+            // TODO: déplacer l'itérateur ici
+
+            return *this;
+        }
+
+        /**
+         * Surcharge de l'opérateur ++ en suffixe.
+         * Utilisation : it++, où it est l'itérateur
+         *
+         * @return      Elément anciennement pointé
+         */
+        // TODO
+        GenericIterator operator ++ (int) {
+
+        }
+
+        /**
+         * Surcharge de l'opérateur -- en préfixe.
+         * Utilisation : --it, où it est l'itérateur
+         *
+         * @return      Nouvel élément pointé par l'itérateur
+         */
+        // TODO
+        GenericIterator& operator -- () {
+
+        }
+
+        /**
+         * Surcharge de l'opérateur -- en suffixe.
+         * Utilisation : it--, où it est l'itérateur
+         *
+         * @return      Elément anciennement pointé
+         */
+        // TODO
+        GenericIterator operator -- (int) {
+
+        }
+
+        // TODO: operator *
+
+        // TODO: operator ->
+
+        // TODO: operator ==
+
+        // TODO: operator !=
     };
 
 public:
@@ -189,6 +244,7 @@ public:
      *
      * @return          Elément voulu
      */
+    // TODO: Tester avec les itérateurs
     T& get(size_t index) {
         isIndexValid(index);
 
@@ -202,7 +258,6 @@ public:
 //         it += index;
 //
 //        return (*it)->data;
-        return nullptr;
     }
 
     /**
@@ -211,6 +266,7 @@ public:
      *
      * @return          Elément voulu
      */
+    // TODO: Tester avec les itérateurs
     T get(size_t index) const {
         isIndexValid(index);
 
@@ -221,7 +277,6 @@ public:
 //        }
 //
 //        return (*it)->data;
-        return nullptr;
     }
 
     /**
