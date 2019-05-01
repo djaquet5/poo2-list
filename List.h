@@ -5,7 +5,8 @@
  Auteur(s)   : David Jaquet & Christoph Rueff
  Date        : 01.05.2019
 
- Remarque(s) :
+ Remarque(s) : Plusieurs choix d'implémentations ont été faits afin d'avoir des
+               similitude avec la la STL
 
  -----------------------------------------------------------------------------------
 */
@@ -46,8 +47,10 @@ private:
     // TODO
     class GenericIterator {
     private:
-
+        Node *current;
     public:
+        GenericIterator(Node& node) : current(&node) {}
+
         /**
          * Surcharge de l'opérateur ++ en préfixe.
          * Utilisation : ++it, où it est l'itérateur
@@ -95,12 +98,36 @@ private:
         }
 
         // TODO: operator *
+        T& operator * () {
 
-        // TODO: operator ->
+        }
 
-        // TODO: operator ==
+        // TODO: operator ->, type = Node ????
+        Node* operator -> () const {
 
-        // TODO: operator !=
+        }
+
+        /**
+         * Surcharge de l'opérateur !=
+         * Les itérateurs sont égaux si ils pointent sur le même noeud
+         * @param o     Deuxième iterateur à vérifier
+         *
+         * @return      True si les itérateurs sont égaux, false sinon
+         */
+        bool operator == (const GenericIterator& o) const {
+            return current == o.current;
+        }
+
+        /**
+         * Surcharge de l'opérateur !=
+         * On retourne l'inverse du résultat de l'opérateur d'égalité (==)
+         * @param o     Deuxième iterateur à vérifier
+         *
+         * @return      True si les itérateurs sont différents, false sinon
+         */
+        bool operator != (const GenericIterator& o) const {
+            return !(*this == o);
+        }
     };
 
 public:
