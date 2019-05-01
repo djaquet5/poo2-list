@@ -1,6 +1,14 @@
-//
-// Created by David on 30.04.2019.
-//
+/*
+ -----------------------------------------------------------------------------------
+ Laboratoire : 03
+ Fichier     : List.h
+ Auteur(s)   : David Jaquet & Christoph Rueff
+ Date        : 01.05.2019
+
+ Remarque(s) :
+
+ -----------------------------------------------------------------------------------
+*/
 
 #pragma once
 
@@ -9,6 +17,11 @@
 #include <iosfwd>
 #include <stdexcept>
 
+/**
+ * Spécification d'une classe List personalisée
+ *
+ * @tparam T    Type générique de la liste
+ */
 template <typename T>
 class List {
 
@@ -86,7 +99,7 @@ private:
      */
 
 
-    void isIndexValid(size_t index) {
+    void isIndexValid(size_t index) const {
         if (index >= nbElements) {
             throw std::out_of_range("Index out of range");
         }
@@ -176,13 +189,39 @@ public:
      *
      * @return          Elément voulu
      */
-    // TODO
     T& get(size_t index) {
+        isIndexValid(index);
 
+        Iterator it = begin();
+
+//        for(size_t i = 0; i < index; ++i) {
+//            ++it;
+//        }
+
+        // On peut remplacer la boucle par cette ligne si on surcharge l'opérateur +=
+//         it += index;
+//
+//        return (*it)->data;
+        return nullptr;
     }
 
+    /**
+     * Rend l'élément présent à un indice donné
+     * @param index     Indice de l'élément à récupérer
+     *
+     * @return          Elément voulu
+     */
     T get(size_t index) const {
+        isIndexValid(index);
 
+        ConstIterator it = begin();
+
+//        for(size_t i = 0; i < index; ++i) {
+//            ++it;
+//        }
+//
+//        return (*it)->data;
+        return nullptr;
     }
 
     /**
@@ -195,6 +234,12 @@ public:
         return get(index);
     }
 
+    /**
+     * Rend l'élément présent à un indice donné
+     * @param index     Indice de l'élément à récupérer
+     *
+     * @return          Elément voulu
+     */
     T operator [] (size_t index) const {
         return get(index);
     }
@@ -342,7 +387,9 @@ public:
      * @return      Itérateur constant pointant sur le dernier élément de la liste
      */
     // TODO
-    ConstIterator end() const;
+    ConstIterator end() const {
+
+    }
 
     /**
      * Recherche dans la liste l'élément reçu en paramètre et retourne l'indice du premier
