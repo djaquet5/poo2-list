@@ -234,7 +234,9 @@ private:
 
         while(head) {
             currentHead = head->next;
-            delete head;
+            if(head != afterLast) {
+                delete head;
+            }
 
             head = currentHead;
         }
@@ -248,6 +250,8 @@ private:
         if (afterLast) {
             delete afterLast;
         }
+        afterLast = nullptr;
+        beforeHead = nullptr;
     }
 
     /**
@@ -511,12 +515,15 @@ public:
 
         // On veut supprimer la tête
         if (index == 0) {
-            head = head->next;
+            if(length == 1) {
+                clear();
+            } else {
+                head = head->next;
 
-            delete current;
-            --length;
-            initSentinels();
-
+                delete current;
+                --length;
+                initSentinels();
+            }
             return;
         }
 
@@ -527,7 +534,7 @@ public:
         current->prev->next = current->next;
 
         if(current == last) {
-            last = current->next;
+            last = current->prev;
         } else {
             current->next->prev = current->prev;
         }
