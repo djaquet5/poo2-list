@@ -146,7 +146,9 @@ public:
 private:
     size_t nbElements;
     Node *head;
-    Node *queue;
+    Node *last;
+    Node *beforeHead;
+    Node *afterLast;
 
     /**
      * Ré-initialise la liste
@@ -180,34 +182,68 @@ private:
     }
      */
 
-
+    /**
+     * Vérifie si l'index est valide. Autrement, il faut que l'index soit compris
+     * dans l'intervalle [0, nbElements[
+     * Si l'index est >=, on générune une std:out_of_range exception
+     * @param index     Index à vérifier
+     */
     void isIndexValid(size_t index) const {
         if (index >= nbElements) {
             throw std::out_of_range("Index out of range");
         }
     }
+
+    void initBeforeHead(){
+        if (!head) {
+            return;
+        }
+
+        beforeHead->data = head->data;
+        beforeHead->next;
+        beforeHead->prev = nullptr;
+
+        head->prev = beforeHead;
+    }
+
+    void initAfterLast(){
+        if (!last) {
+            return;
+        }
+
+        afterLast->data = last->data;
+        afterLast->prev = last->prev;
+        afterLast->next = nullptr;
+
+        last->next = afterLast;
+    }
+
 public:
 
     /**
      * Constructeur vide
      */
-    List() : nbElements(0), head(nullptr), queue(nullptr) {}
+    List() : nbElements(0), head(nullptr), last(nullptr) {}
 
     /**
      * Constructeur avec liste d'initialiseurs
      * @param values    List d'initialiseurs
      */
-    List(std::initializer_list<T> values) : head(nullptr), queue(nullptr), nbElements(0) {
+    List(std::initializer_list<T> values) : nbElements(0), head(nullptr), last(nullptr) {
         for(auto it = values.begin(); it != values.end(); ++it) {
             append(*it);
         }
+
+//        initBeforeHead();
+//        initAfterLast();
     }
 
     /**
      * Constructeur de copie
      * @param o     Liste à copier
      */
-    List(const List<T>& o) : nbElements(0), head(nullptr), queue(nullptr) {
+    // TODO: Utiliser iterateur
+    List(const List<T>& o) : nbElements(0), head(nullptr), last(nullptr) {
         Node *otherCurrent;
 
         if (!o.head) {
@@ -242,7 +278,9 @@ public:
             List<T> tmp(o);
 
             head = tmp.head;
-            queue = tmp.head;
+            tmp.head = nullptr;
+
+            last = tmp.last;
 
             nbElements = o.nbElements;
         }
@@ -342,7 +380,7 @@ public:
         if (head) {
             head->prev = newHead;
         } else {
-            queue = newHead;
+            last = newHead;
         }
 
         head = newHead;
@@ -355,16 +393,16 @@ public:
      * @param o     L'élément à ajouter
      */
     void append(const T& o) {
-        Node *newQueue = new Node(o, queue, nullptr);
+        Node *newQueue = new Node(o, last, nullptr);
 
         // On vérifie si il y a déjà des éléments dans la liste
-        if (queue) {
-            queue->next = newQueue;
+        if (last) {
+            last->next = newQueue;
         } else {
             head = newQueue;
         }
 
-        queue = newQueue;
+        last = newQueue;
         ++nbElements;
     }
 
@@ -373,39 +411,33 @@ public:
      *
      * @param index     Index de l'élément à supprimer
      */
-    // TODO: Pas sur que ça marche ? => A TESTER
+    // TODO: utiliser iterateur
     void removeAt(size_t index) {
         Node *current;
 
-        if (nbElements == 0) {
-            throw std::runtime_error("The list is empty.");
-        }
+        isIndexValid(index);
 
-        if(index >= nbElements){
-            throw std::invalid_argument("Index is out of bounds.");
-        }
+        // On crée un noeud qui est avant le début de la liste
+        current = head;
 
         // On veut supprimer la tête
         if (index == 0) {
-            current = head;
             head = head->next;
 
             delete current;
             --nbElements;
+
             return;
         }
 
-        // On crée un noeud qui est avant le début de la liste
-        *current = Node(nullptr, nullptr, head);// TODO: => Memory Leak ???
-
-        for(size_t i = 0; i <= index; ++i) {
+        for(size_t i = 0; i < index; ++i) {
             current = current->next;
         }
 
         current->prev->next = current->next;
 
-        if(current == queue) {
-            queue = current->next;
+        if(current == last) {
+            last = current->next;
         } else {
             current->next->prev = current->prev;
         }
@@ -419,7 +451,6 @@ public:
      *
      * @param o     Elément à vérifier
      */
-    // TODO: Pas sur que ça marche ? => A TESTER
     void remove(const T& o) {
         int index;
 
@@ -477,12 +508,13 @@ public:
      * @return      Indice du premier élément trouvé au format size_t, retourne -1 si
      *              l'élément n'est pas dans la liste
      */
+    // TODO : utiliser les itérateurs
     int find(const T& o) const {
         Node *current = head;
         int index = 0;
 
         while (current) {
-            if (current->data = o) { // TODO == ???
+            if (current->data == o) {
                 return index;
             }
 
@@ -500,8 +532,20 @@ public:
      *
      * @return      Référence sur le flux de sortie
      */
-    // TODO
     friend std::ostream& operator << (std::ostream& os, const List& list) {
+        Node *current = list.head;
 
+        os << "(";
+        for(size_t i = 0; i < list.nbElements; ++i) {
+            if (i) {
+                os << ", ";
+            }
+
+            os << current->data;
+            current = current->next;
+        }
+        os << ")";
+
+        return os;
     }
 };
