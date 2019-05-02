@@ -393,20 +393,16 @@ public:
      *
      * @return          Elément voulu
      */
-    // TODO: Tester avec les itérateurs
     T& get(size_t index) {
         isIndexValid(index);
 
         Iterator it = begin();
 
-//        for(size_t i = 0; i < index; ++i) {
-//            ++it;
-//        }
+        for(size_t i = 0; i < index; ++i) {
+            ++it;
+        }
 
-        // On peut remplacer la boucle par cette ligne si on surcharge l'opérateur +=
-//         it += index;
-//
-//        return (*it)->data;
+        return it->data;
     }
 
     /**
@@ -415,17 +411,16 @@ public:
      *
      * @return          Elément voulu
      */
-    // TODO: Tester avec les itérateurs
     T get(size_t index) const {
         isIndexValid(index);
 
         ConstIterator it = begin();
 
-//        for(size_t i = 0; i < index; ++i) {
-//            ++it;
-//        }
-//
-//        return (*it)->data;
+        for(size_t i = 0; i < index; ++i) {
+            ++it;
+        }
+
+        return it->data;
     }
 
     /**
