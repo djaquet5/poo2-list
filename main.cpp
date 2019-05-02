@@ -42,77 +42,8 @@ void codeDonnee() {
     // Affichage: 14 3 42
 }
 
-void testListe() {
-    List<int> listeVide;
-    cout << listeVide << endl;
-
-    listeVide.append(1);
-    listeVide.append(2);
-    listeVide.append(3);
-    listeVide.append(4);
-    listeVide.append(5);
-
-    cout << listeVide << " de taille " << listeVide.size() << endl;
-
-    List<int> listeCopie(listeVide);
-    cout << "ListeCopie : " << listeCopie << endl << endl;
-
-    listeCopie.insert(6);
-    List<int> listeEgal = listeCopie;
-
-    cout << "ListeVide : " << listeVide << endl;
-    cout << "ListeCopie : " << listeCopie << endl;
-    cout << "ListeEgal : " << listeEgal << endl;
-
-    listeEgal.append(7);
-
-    cout << "ListeEgal : " << listeEgal << endl;
-
-    List<int> listeAssign;
-    cout << "$ListeAssign : " << listeAssign << endl;
-    listeAssign.assign(listeEgal);
-    cout << "$ListeAssign : " << listeAssign << endl;
-    listeAssign.append(8);
-    listeAssign.insert(9);
-
-    cout << "ListeAssign : " << listeAssign << endl;
-    cout << "ListeEgal : " << listeEgal << endl;
-
-
-    cout << "Before Remove : " << listeVide << endl;
-    listeVide.removeAt(2);
-    cout << "After : " << listeVide << endl;
-
-    listeVide.removeAt(0);
-    cout << "ListeVide : " << listeVide << endl;
-    listeVide.removeAt(listeVide.size() - 1);
-    cout << "ListeVide : " << listeVide << endl;
-
-    try {
-        listeVide.removeAt(listeVide.size());
-    } catch(out_of_range e) {
-        cout << e.what() << endl;
-    }
-    cout << "ListeVide : " << listeVide << endl;
-
-
-    List<int> l12 = {1, 1, 2, 1, 2, 2, 1, 1, 2};
-    cout << l12 << endl;
-    cout << "Premier 1 : " << l12.find(1) << "___ premier 2 : " << l12.find(2) << endl;
-
-    l12.remove(1);
-    cout << "l12 sans les 1 : " << l12 << endl;
-
-    l12.remove(2);
-    cout << "l12 vide : " << l12 << endl;
-
-    l12.remove(0);
-    cout << "l12 toujours vide : " << l12 << endl;
-}
-
 int main() {
     codeDonnee();
-//    testListe();
 
     cout << "/********************** Constructeurs **********************/" << endl;
     List<string> l1;
@@ -151,7 +82,7 @@ int main() {
          << "l2 : " << l2 << endl
          << "l3 : " << l3 << endl << endl;
 
-    // TODO get
+
     cout << "/********************** Get et [] **********************/" << endl;
     const List<string> lConst = { "ceci", "est", "une", "liste", "constante" };
 
@@ -260,6 +191,12 @@ int main() {
          << "l3.find(\"four\") : " << l3.find("four") << endl
          << "l3.find(\"five\") : " << l3.find("five") << endl << endl;
 
+    cout <<"/*********************** Operateur -> ***********************/" << endl;
+    List<string> l4 = {"Hello"};
+    cout << "List l4 : " << l4 << endl;
+    List<string>::Iterator iter = l4.begin();
+    iter->append(" World");
+    cout << "List l4 après modification : " << l4 << endl << endl;
 
     cout << "/********************** Bateaux **********************/" << endl;
     Boat *b1 = new Boat("Le INF1", 100);
