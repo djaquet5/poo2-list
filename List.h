@@ -618,16 +618,16 @@ public:
      * @return      Référence sur le flux de sortie
      */
     friend std::ostream& operator << (std::ostream& os, const List& list) {
-        Node *current = list.head;
+        ConstIterator it = list.begin();
 
         os << "(";
-        for(size_t i = 0; i < list.length; ++i) {
-            if (i) {
+        while(it != list.end()) {
+            if(it != list.begin()) {
                 os << ", ";
             }
 
-            os << current->data;
-            current = current->next;
+            os << *it;
+            ++it;
         }
         os <<")";
 
