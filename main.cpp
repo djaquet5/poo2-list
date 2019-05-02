@@ -174,17 +174,44 @@ int main() {
          << "l3[l3.size() - 1] : " << l3[l3.size() - 1] << endl << endl;
 
     cout << "On teste un get et un operateur [] avec des index trop grand : ";
+    bool success1;
+    bool success2;
+    bool success3;
+    bool success4;
+
     try {
         lConst.get(lConst.size());
-        lConst[lConst.size()];
-        l3.get(l3.size());
-        l3[l3.size()];
-        cout << "Test rate :( " << endl << endl;
+        success1 = false;
     } catch(out_of_range& e) {
-        cout << e.what() << endl << endl;
+        success1 = true;
     }
 
-    cout << endl << endl;
+    try {
+        lConst[lConst.size()];
+        success2 = false;
+    } catch(out_of_range& e) {
+        success2 = true;
+    }
+
+    try {
+        l3.get(l3.size());
+        success3 = false;
+    } catch(out_of_range& e) {
+        success3 = true;
+    }
+
+    try {
+        l3[l3.size()];
+        success4 = false;
+    } catch(out_of_range& e) {
+        success4 = true;
+    }
+
+    if (success1 && success2 && success3 && success4) {
+        cout << "Test reussi :)" << endl << endl;
+    } else {
+        cout << "Test echoue :(" << endl << endl;
+    }
 
     cout << "/********************** Size **********************/" << endl;
     cout << "l1 : " << l1 << endl
