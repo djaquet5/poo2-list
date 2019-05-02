@@ -6,8 +6,9 @@
  Date        : 01.05.2019
  But         : Programme de test de l'implémentation d'une liste personnalisée
 
- Remarque(s) : - Il n'y a pas de blocs pour tester les méthodes append et insert
-                 car elles sont testées tout au long du programme
+ Remarque(s) : - Il n'y a pas de blocs pour tester les méthodes append, insert
+                 et l'operateur de flux car elles sont testées tout au long du
+                 programme
 
  -----------------------------------------------------------------------------------
 */
@@ -136,20 +137,20 @@ int main() {
     List<string> l3 = { "eins", "zwei", "drei" };
     cout << "Constructeurs par liste d'initialiseurs l3 : " << l3 << endl << endl;
 
-//    cout << "/********************** Assign et = **********************/" << endl;
-//    l3.assign(l1);
-//    l3.append("five");
-//    cout << "Test de l3.assign(l1), puis on append \"five\" à l3" << endl
-//         << "l3 doit valoir {\"one\", \"two\", \"three\", \"five\"} et l1 est inchange" << endl
-//         << "l1 : " << l1 << endl
-//         << "l3 : " << l3 << endl << endl;
-//
-//    l3 = l2;
-//    l3.insert("zero");
-//    cout << "Test de l3 = l2, puis on insert \"zero\" à l3" << endl
-//         << "l3 doit valoir {\"zero\", \"one\", \"two\", \"three\", \"four\"} et l2 est inchange" << endl
-//         << "l2 : " << l2 << endl
-//         << "l3 : " << l3 << endl << endl;
+    cout << "/********************** Assign et = **********************/" << endl;
+    l3.assign(l1);
+    l3.append("five");
+    cout << "Test de l3.assign(l1), puis on append \"five\" à l3" << endl
+         << "l3 doit valoir {\"one\", \"two\", \"three\", \"five\"} et l1 est inchange" << endl
+         << "l1 : " << l1 << endl
+         << "l3 : " << l3 << endl << endl;
+
+    l3 = l2;
+    l3.insert("zero");
+    cout << "Test de l3 = l2, puis on insert \"zero\" à l3" << endl
+         << "l3 doit valoir {\"zero\", \"one\", \"two\", \"three\", \"four\"} et l2 est inchange" << endl
+         << "l2 : " << l2 << endl
+         << "l3 : " << l3 << endl << endl;
 
     // TODO:
     cout << "/********************** Get et [] **********************/" << endl;
@@ -190,7 +191,23 @@ int main() {
     l1.remove("one");
     cout << "On remove(\"one\") de l1 : " << l1 << endl << endl;
 
+    l1.remove("two");
+    l1.remove("six");
+    l1.remove("seven");
+    l1.remove("seven");
+    cout << "On a tout supprime avec remove, on a fait un remove sur la liste vide l1 : " << l1 << endl << endl;
 
+
+    cout << "/********************** Find **********************/" << endl;
+    cout << "l3 : " << l3 << endl
+         << "l3.find(\"zero\") : " << l3.find("zero") << endl
+         << "l3.find(\"two\") : " << l3.find("two") << endl
+         << "l3.find(\"four\") : " << l3.find("four") << endl
+         << "l3.find(\"five\") : " << l3.find("five") << endl << endl;
+
+
+    cout << "/********************** Bateaux **********************/" << endl;
+    Boat b1("Le INF1", 100);
 
     return EXIT_SUCCESS;
 }

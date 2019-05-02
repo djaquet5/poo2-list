@@ -7,7 +7,7 @@
 Boat::Boat(std::string name, std::size_t weight) : name(name), weight(weight) {}
 
 std::string Boat::display() const {
-    return "Nom: " + name + " pese " + std::to_string(weight) + "kg.";
+    return "Nom: " + name + ", " + std::to_string(weight) + "kg";
 }
 
 std::ostream &operator<<(std::ostream &os, const Boat &b) {
