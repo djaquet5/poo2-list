@@ -12,6 +12,14 @@ Nous ne savions pas si nous devions mettre les notations pointeurs ou référenc
 
 ## Choix d'implémentation
 
+### Itérateurs
+
+Pour ce qui est de l'implémentation des itérateurs, nous avons une classe générique `GenericIterator` qui prend en charge l'implémentation des opérateurs `==` et `!=` ainsi que des méthodes `inc()` et `dec()` qui permettent de déplacer le pointeur sur le `Node` visité.
+
+Les classes `Iterator` et `ConstIterator` héritent de `GenericIterator` et implémentent les surcharges d'opérateurs `*, ->, ++it, it++, --it et it--` de manière à ce que `Iterator` permette de modifier la liste parourue sans que ce soit le cas pour `ConstIterator`.
+
+Bien que les opérateurs `++, --` soient les mêmes dans les deux enfants de l'itérateur générique, celui-ci ne les implémente pas car il ne définit pas l'opérateur `*` qui permet, selon si on est dans `Iterator` ou `ConstIterator`, de déréférencer l'itérateur de manière à permettre une modification où non.
+
 ### Remove
 
 Pour la méthode `List<T>::remove(const T& o)`, nous ne savions pas si nous devions supprimer la première occurrence de `o` trouvée ou toutes les occurrences. Nous avons décidé d'obtenir le même résultat que la fonction `std::list::remove(const value_type& val)`  de la `STL`. Nous supprimons donc toutes les occurrences trouvées dans la liste correspondant à `o`.
@@ -47,7 +55,7 @@ A titre de comparaison, la `STL` utilise les fonctions `rbegin()` et `rend` afin
 
 Après réflexion avec plusieurs membres de la classe, nous avons décidé d'implémenté deux noeuds sentinelles. Ces sentinelles se trouvent avant le début de la liste et après la fin de la liste. Elle se nomme respectivement `beforeHead` et `afterLast`.
 
-![Schéma des sentinelles](.\SchemaSentinelle.jpg)
+![Schéma des sentinelles](SchemaSentinelle.jpg)
 
 On peut donc voir le noeud `head` a un référence vers le noeuds `beforeHead` comme noeud précédant. Cependant pour ce dernier, la référence vers noeud suivant est la même que le noeud suivant de `head`.
 
@@ -93,15 +101,6 @@ cout << *it << " ";							// Affiche la valeur de head, 1
 ```
 
 ## Avantages - Inconvénients
-
-
-### Itérateurs
-
-Pour ce qui est de l'implémentation des itérateurs, nous avons une classe générique ```GenericIterator``` qui prend en charge l'implémentation des opérateurs ```==``` et ```!=``` ainsi que des méthodes ```inc()``` et ```dec()``` qui permettent de déplacer le pointeur sur le ```Node``` visité.
-
-Les classes ```Iterator``` et ```ConstIterator``` héritent de ```GenericIterator``` et implémentent les surcharges d'opérateurs ```*, ->, ++it, it++, --it et it--``` de manière à ce que ```Iterator``` permette de modifier la liste parourue sans que ce soit le cas pour ```ConstIterator```.
-
-Bien que les opérateurs ```++, --``` soient les mêmes dans les deux enfants de l'itérateur générique, celui-ci ne les implémente pas car il ne définit pas l'opérateur ```*``` qui permet, selon si on est dans ```Iterator``` ou ```ConstIterator```, de déréférencer l'itérateur de manière à permettre une modification où non.
 
 ### Sentinelles
 
