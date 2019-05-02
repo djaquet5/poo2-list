@@ -6,6 +6,12 @@ David Jaquet & Christoph Rouff soit Rueff
 
 ## Choix d'implémentation
 
+### Remove
+
+Pour la méthode `List<T>::remove(const T& o)`, nous ne savions pas si nous devions supprimer la première occurrence de `o` trouvée ou toutes les occurrences. Nous avons décidé d'obtenir le même résultat que la fonction `std::list::remove(const value_type& val)`  de la `STL`. Nous supprimons donc toutes les occurences trouvées dans la liste correspondant à `o`.
+
+[Page de remove de la STL](http://www.cplusplus.com/reference/list/list/remove/ std::list::remove)
+
 ### Noeuds sentinelles
 
 Dans l'exemple d'exécution du code fourni dans la donnée du laboratoire, nous devons pouvoir parcourir la liste dans les deux sens avec les itérateurs fournis par les méthodes `List<T>::begin()` et `List<T>::end()`. Voici l'exemple de code fourni :
@@ -93,3 +99,6 @@ Bien que les opérateurs ```++, --``` soient les mêmes dans les deux enfants de
 
 ### Sentinelles
 
+Un gros avantages de nos méthodes de sentinelles par rapport à la `STL` et que nous avons utilisons les même méthode pour parcourir la liste dans un sens où dans l'autre. Le parcours de notre liste est plus simple que celui de la `STL` puisque pour parcourir une `std::list` à l'envers, nous devons utiliser les méthodes `rbegin()` et `rend()`.
+
+Cependant, l'utilisation de ces sentinelles tel que nous les avons implémentées nous force à avoir modifier leur valeur à chaque insertion ou suppression de noeud. Cela nous rajoute donc des instructions et donc du temps d'exécution. De plus, la présence de ces sentinelles nous demande également plus de mémoire.
