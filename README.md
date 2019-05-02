@@ -1,14 +1,20 @@
-# Laboratoire 3 : Liste générique
+# POO2 - Laboratoire 3 : Liste générique
 
 David Jaquet & Christoph Rouff soit Rueff
 
 ## Diagramme de classes
 
+Voici le diagramme des classes de notre implémentation :
+
+![Diagramme de classe](uml.png)
+
+Nous ne savions pas si nous devions mettre les notations pointeurs ou références des paramètres. Puisqu'un diagramme de classe doit être le plus éloigné du langage d'implémentation possible nous avons décidé de ne pas les ajouter.
+
 ## Choix d'implémentation
 
 ### Remove
 
-Pour la méthode `List<T>::remove(const T& o)`, nous ne savions pas si nous devions supprimer la première occurrence de `o` trouvée ou toutes les occurrences. Nous avons décidé d'obtenir le même résultat que la fonction `std::list::remove(const value_type& val)`  de la `STL`. Nous supprimons donc toutes les occurences trouvées dans la liste correspondant à `o`.
+Pour la méthode `List<T>::remove(const T& o)`, nous ne savions pas si nous devions supprimer la première occurrence de `o` trouvée ou toutes les occurrences. Nous avons décidé d'obtenir le même résultat que la fonction `std::list::remove(const value_type& val)`  de la `STL`. Nous supprimons donc toutes les occurrences trouvées dans la liste correspondant à `o`.
 
 [Page de remove de la STL](http://www.cplusplus.com/reference/list/list/remove/ std::list::remove)
 
