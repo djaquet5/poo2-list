@@ -111,7 +111,7 @@ void testListe() {
 }
 
 int main() {
-//    codeDonnee();
+    codeDonnee();
 //    testListe();
 
     cout << "/********************** Constructeurs **********************/" << endl;
@@ -154,6 +154,35 @@ int main() {
     // TODO get
     cout << "/********************** Get et [] **********************/" << endl;
     const List<string> lConst = { "ceci", "est", "une", "liste", "constante" };
+
+    cout << "Avec la liste contante lConst : " << lConst << endl
+         << "lConst.get(0) : " << lConst.get(0) << endl
+         << "lConst.get(2) : " << lConst.get(2) << endl
+         << "lConst.get(lConst.size() - 1) : " << lConst.get(lConst.size() - 1) << endl;
+
+    cout << "lConst[0] : " << lConst[0] << endl
+         << "lConst[2] : " << lConst[2] << endl
+         << "lConst[lConst.size() - 1] : " << lConst[lConst.size() - 1] << endl << endl;
+
+    cout << "Avec la liste l3 : " << l3 << endl
+         << "l3.get(0) : " << l3.get(0) << endl
+         << "l3.get(2) : " << l3.get(2) << endl
+         << "l3.get(l3.size() - 1) : " << l3.get(l3.size() - 1) << endl;
+
+    cout << "l3[0] : " << l3[0] << endl
+         << "l3[2] : " << l3[2] << endl
+         << "l3[l3.size() - 1] : " << l3[l3.size() - 1] << endl << endl;
+
+    cout << "On teste un get et un operateur [] avec des index trop grand : ";
+    try {
+        lConst.get(lConst.size());
+        lConst[lConst.size()];
+        l3.get(l3.size());
+        l3[l3.size()];
+        cout << "Test rate :( " << endl << endl;
+    } catch(out_of_range& e) {
+        cout << e.what() << endl << endl;
+    }
 
     cout << endl << endl;
 
@@ -206,7 +235,25 @@ int main() {
 
 
     cout << "/********************** Bateaux **********************/" << endl;
-    Boat b1("Le INF1", 100);
+    Boat *b1 = new Boat("Le INF1", 100);
+    Boat *b2 = new Boat("Le Parisien", 150);
+    Sailing *s1 = new Sailing("Celui qui prend la mer", 500);
+    Sailing *s2 = new Sailing("Celui qui prend l'eau", 1000);
+    Yacht *y1 = new Yacht("The place to be", 10000);
+    Yacht *y2 = new Yacht("The home", 100000);
+
+    const List<Boat*> boats({b1, b2, s1, s2, y1, y2});
+    cout << "Mes bateaux : " << endl;
+
+    // On fait les deux boucles pour tester les opérateur d'incrémentation/décrémentation en suffixe
+    for(List<Boat*>::ConstIterator it = boats.begin(); it != boats.end(); it++) {
+        cout << **it << endl;
+    }
+
+    cout << endl << "Dans l'autre ordre : " << endl;
+    for(List<Boat*>::ConstIterator it = boats.end(); it != boats.begin(); it--) {
+        cout << **it << endl;
+    }
 
     return EXIT_SUCCESS;
 }
