@@ -20,7 +20,6 @@
 
 using namespace std;
 
-// TODO: les for ont été commentés tant que les opérateurs ne sont pas surchargés
 void codeDonnee() {
     List<string> l;
 
@@ -136,24 +135,24 @@ int main() {
     List<string> l3 = { "eins", "zwei", "drei" };
     cout << "Constructeurs par liste d'initialiseurs l3 : " << l3 << endl << endl;
 
-//    cout << "/********************** Assign et = **********************/" << endl;
-//    l3.assign(l1);
-//    l3.append("five");
-//    cout << "Test de l3.assign(l1), puis on append \"five\" à l3" << endl
-//         << "l3 doit valoir {\"one\", \"two\", \"three\", \"five\"} et l1 est inchange" << endl
-//         << "l1 : " << l1 << endl
-//         << "l3 : " << l3 << endl << endl;
-//
-//    l3 = l2;
-//    l3.insert("zero");
-//    cout << "Test de l3 = l2, puis on insert \"zero\" à l3" << endl
-//         << "l3 doit valoir {\"zero\", \"one\", \"two\", \"three\", \"four\"} et l2 est inchange" << endl
-//         << "l2 : " << l2 << endl
-//         << "l3 : " << l3 << endl << endl;
+    cout << "/********************** Assign et = **********************/" << endl;
+    l3.assign(l1);
+    l3.append("five");
+    cout << "Test de l3.assign(l1), puis on append \"five\" à l3" << endl
+         << R"(l3 doit valoir {"one", "two", "three", "five"} et l1 est inchange)" << endl
+         << "l1 : " << l1 << endl
+         << "l3 : " << l3 << endl << endl;
 
-    // TODO:
+    l3 = l2;
+    l3.insert("zero");
+    cout << "Test de l3 = l2, puis on insert \"zero\" à l3" << endl
+         << R"(l3 doit valoir {"zero", "one", "two", "three", "four"} et l2 est inchange)" << endl
+         << "l2 : " << l2 << endl
+         << "l3 : " << l3 << endl << endl;
+
+    // TODO get
     cout << "/********************** Get et [] **********************/" << endl;
-    List<string> lConst = { "ceci", "est", "une", "liste", "constante" };
+    const List<string> lConst = { "ceci", "est", "une", "liste", "constante" };
 
     cout << endl << endl;
 
