@@ -7,5 +7,5 @@
 Yacht::Yacht(const std::string &name, size_t weight) : Boat(name, weight) {}
 
 std::string Yacht::display() const {
-    return Boat::display() + "Il s'agit d'une merveilleux yacht !";
+    return Boat::display() + ", Yacht !";
 }

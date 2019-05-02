@@ -6,8 +6,9 @@
  Date        : 01.05.2019
  But         : Programme de test de l'implémentation d'une liste personnalisée
 
- Remarque(s) : - Il n'y a pas de blocs pour tester les méthodes append et insert
-                 car elles sont testées tout au long du programme
+ Remarque(s) : - Il n'y a pas de blocs pour tester les méthodes append, insert
+                 et l'operateur de flux car elles sont testées tout au long du
+                 programme
 
  -----------------------------------------------------------------------------------
 */
@@ -189,7 +190,23 @@ int main() {
     l1.remove("one");
     cout << "On remove(\"one\") de l1 : " << l1 << endl << endl;
 
+    l1.remove("two");
+    l1.remove("six");
+    l1.remove("seven");
+    l1.remove("seven");
+    cout << "On a tout supprime avec remove, on a fait un remove sur la liste vide l1 : " << l1 << endl << endl;
 
+
+    cout << "/********************** Find **********************/" << endl;
+    cout << "l3 : " << l3 << endl
+         << "l3.find(\"zero\") : " << l3.find("zero") << endl
+         << "l3.find(\"two\") : " << l3.find("two") << endl
+         << "l3.find(\"four\") : " << l3.find("four") << endl
+         << "l3.find(\"five\") : " << l3.find("five") << endl << endl;
+
+
+    cout << "/********************** Bateaux **********************/" << endl;
+    Boat b1("Le INF1", 100);
 
     return EXIT_SUCCESS;
 }
