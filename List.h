@@ -411,7 +411,7 @@ public:
             ++it;
         }
 
-        return it->data;
+        return *it;
     }
 
     /**
@@ -429,7 +429,7 @@ public:
             ++it;
         }
 
-        return it->data;
+        return *it;
     }
 
     /**
@@ -605,20 +605,17 @@ public:
      * @return      Indice du premier élément trouvé au format size_t, retourne -1 si
      *              l'élément n'est pas dans la liste
      */
-    // TODO : utiliser les itérateurs
     int find(const T& o) const {
-        Node *current = head;
         int index = 0;
+        ConstIterator it = begin();
 
-        while (current) {
-            if (current->data == o) {
+        while(it != end()) {
+            if(*it == o) {
                 return index;
             }
-
+            ++it;
             ++index;
-            current = current->next;
         }
-
         return -1;
     }
 
