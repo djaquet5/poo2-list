@@ -13,11 +13,9 @@
 
 #pragma once
 
-#include <initializer_list>
 #include <cstdio>
-#include <iosfwd>
 #include <stdexcept>
-#include <iostream>
+#include <ostream>
 
 /**
  * Spécification d'une classe List personalisée
@@ -50,7 +48,7 @@ private:
     protected:
         Node *current;
     public:
-        GenericIterator(Node& node) : current(&node) {}
+        GenericIterator(Node* node) : current(node) {}
 
         /**
          * Surcharge de l'opérateur !=
@@ -98,7 +96,9 @@ public:
     // TODO
     class Iterator : public GenericIterator {
 
-        Iterator(Node& node) : GenericIterator(node) {};
+    public:
+
+        Iterator(Node* node) : GenericIterator(node) {};
 
         T& operator * () const {
             return GenericIterator::current->data;
@@ -159,7 +159,9 @@ public:
     // TODO
     class ConstIterator : public GenericIterator {
 
-        ConstIterator(Node& node) : GenericIterator(node) {};
+    public:
+
+        ConstIterator(Node* node) : GenericIterator(node) {};
 
         T operator * () const {
             return GenericIterator::current->data;
@@ -232,7 +234,9 @@ private:
 
         while(head) {
             currentHead = head->next;
-            delete head;
+            if(head != afterLast) {
+                delete head;
+            }
 
             head = currentHead;
         }
@@ -246,6 +250,8 @@ private:
         if (afterLast) {
             delete afterLast;
         }
+        afterLast = nullptr;
+        beforeHead = nullptr;
     }
 
     /**
@@ -509,12 +515,15 @@ public:
 
         // On veut supprimer la tête
         if (index == 0) {
-            head = head->next;
+            if(length == 1) {
+                clear();
+            } else {
+                head = head->next;
 
-            delete current;
-            --length;
-            initSentinels();
-
+                delete current;
+                --length;
+                initSentinels();
+            }
             return;
         }
 
@@ -525,7 +534,7 @@ public:
         current->prev->next = current->next;
 
         if(current == last) {
-            last = current->next;
+            last = current->prev;
         } else {
             current->next->prev = current->prev;
         }
@@ -553,9 +562,8 @@ public:
      *
      * @return      Iterateur pointant sur le premier élément de la liste
      */
-    // TODO
     Iterator begin() {
-
+        return Iterator(beforeHead);
     }
 
     /**
@@ -563,9 +571,8 @@ public:
      *
      * @return      Itérateur pointant sur le dernier élément de la liste
      */
-    // TODO
     Iterator end() {
-
+        return Iterator(afterLast);
     }
 
     /**
@@ -573,9 +580,8 @@ public:
      *
      * @return      Iterateur constant pointant sur le premier élément de la liste
      */
-    // TODO
     ConstIterator begin() const {
-
+        return ConstIterator(beforeHead);
     }
 
     /**
@@ -583,9 +589,8 @@ public:
      *
      * @return      Itérateur constant pointant sur le dernier élément de la liste
      */
-    // TODO
     ConstIterator end() const {
-
+        return ConstIterator(afterLast);
     }
 
     /**

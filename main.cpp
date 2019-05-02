@@ -28,17 +28,17 @@ void codeDonnee() {
     l.append("deux");
     l.append("trois");
 
-//    for(List<string>::Iterator it = l.begin(); it != l.end(); ++it){
-//        cout << *it << " ";
-//    }
-//    cout << endl;
+    for(List<string>::Iterator it = l.begin(); it != l.end(); ++it){
+        cout << *it << " ";
+    }
+    cout << endl;
     // Affichage: un deux trois
 
     const List<int> c = { 42, 3, 14 };
-//    for(List<int>::ConstIterator it = c.end(); it != c.begin(); --it){
-//        cout << *it << " ";
-//    }
-//    cout << endl;
+    for(List<int>::ConstIterator it = c.end(); it != c.begin(); --it){
+        cout << *it << " ";
+    }
+    cout << endl;
     // Affichage: 14 3 42
 }
 
@@ -180,12 +180,12 @@ int main() {
     cout << "Apres le removeAt(l1.size() - 1) : " << l1 << endl;
 
     cout << "On passe index qui est hors de la liste : ";
-//    try {
-//        l1.removeAt(l1.size());
-//        cout << "Test rate :(" << endl << endl;
-//    } catch(out_of_range& e) {
-//        cout << e.what() << endl << endl;
-//    }
+    try {
+        l1.removeAt(l1.size());
+        cout << "Test rate :(" << endl << endl;
+    } catch(out_of_range& e) {
+        cout << e.what() << endl << endl;
+    }
 
     l1.remove("one");
     cout << "On remove(\"one\") de l1 : " << l1 << endl << endl;
