@@ -40,18 +40,23 @@ private:
         /**
          * Constructeur
          */
-        Node(const T& data, Node* prev = nullptr, Node* next = nullptr) : prev(prev), next(next), data(data) {}
+        explicit Node(const T& data, Node* prev = nullptr, Node* next = nullptr) : prev(prev), next(next), data(data) {}
     };
 
-    // TODO
+    /**
+     * Iterateur generique pour la List
+     */
     class GenericIterator {
     protected:
         Node *current;
     public:
-        GenericIterator(Node* node) : current(node) {}
+        /**
+         * Constructeur
+         */
+        explicit GenericIterator(Node* node) : current(node) {}
 
         /**
-         * Surcharge de l'opérateur !=
+         * Surcharge de l'opérateur ==
          * Les itérateurs sont égaux si ils pointent sur le même noeud
          * @param o     Deuxième iterateur à vérifier
          *
@@ -73,6 +78,11 @@ private:
         }
 
     private:
+        /**
+         * Methode privée qui renvoie une exception si le Node est null
+         *
+         * @throw out_of_range si le Node est null
+         */
         void checkBound(Node* node) {
             if(!node) {
                 throw std::out_of_range("Iterator out of range");
@@ -80,11 +90,23 @@ private:
         }
 
     protected:
+        /**
+         * Incrémente l'itérateur (fait pointer l'itérateur sur le prochain
+         * élément de la liste
+         *
+         * @throw out_of_range si le prochain Node est null
+         */
         void inc() {
             checkBound(current->next);
             current = current->next;
         }
 
+        /**
+         * Décrémente l'itérateur (fait pointer l'itérateur sur l'élément
+         * précédent de la liste
+         *
+         * @throw out_of_range si le Node précédent est null
+         */
         void dec() {
             checkBound(current->prev);
             current = current->prev;
@@ -93,18 +115,27 @@ private:
 
 public:
 
-    // TODO
+    /**
+     * Itérateur (mutable) pour la liste
+     */
     class Iterator : public GenericIterator {
 
     public:
+        /**
+         * Constructeur
+         */
+        explicit Iterator(Node* node) : GenericIterator(node) {};
 
-        Iterator(Node* node) : GenericIterator(node) {};
-
+        /**
+         * Surcharge de l'opérateur de déréférencement
+         */
         T& operator * () const {
             return GenericIterator::current->data;
         }
 
-
+        /**
+         * Surcharge de l'opérateur de déréférencement + adressage
+         */
         T* operator -> () const {
             return &(GenericIterator::current->data);
         }
@@ -156,17 +187,28 @@ public:
         }
     };
 
-    // TODO
+    /**
+     * Itérateur (immutable) pour la liste
+     */
     class ConstIterator : public GenericIterator {
 
     public:
 
-        ConstIterator(Node* node) : GenericIterator(node) {};
+        /**
+         * Constructeur
+         */
+        explicit ConstIterator(Node* node) : GenericIterator(node) {};
 
+        /**
+         * Surcharge de l'opérateur de déréférencement
+         */
         T operator * () const {
             return GenericIterator::current->data;
         }
 
+        /**
+         * Surcharge de l'opérateur de déréférencement + adressage
+         */
         T const * operator -> () const {
             return &(GenericIterator::current->data);
         }
@@ -386,8 +428,8 @@ public:
     }
 
     /**
-     * Surcharge de l'opérateur d'affection
-     * @param o     Liste utilisée pour l'affection
+     * Surcharge de l'opérateur d'affectation
+     * @param o     Liste utilisée pour l'affectation
      *
      * @return      Référence sur la liste courante
      */
@@ -625,7 +667,6 @@ public:
      *
      * @return      Référence sur le flux de sortie
      */
-    // `TODO: utiliser itérateurs
     friend std::ostream& operator << (std::ostream& os, const List& list) {
         ConstIterator it = list.begin();
 
