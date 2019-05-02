@@ -43,7 +43,10 @@ void codeDonnee() {
 }
 
 int main() {
+
+    cout << "/*********************** Code Donnee ***********************/" << endl;
     codeDonnee();
+    cout << endl;
 
     cout << "/********************** Constructeurs **********************/" << endl;
     List<string> l1;
@@ -218,6 +221,13 @@ int main() {
     for(List<Boat*>::ConstIterator it = boats.end(); it != boats.begin(); it--) {
         cout << **it << endl;
     }
+
+    delete b1;
+    delete b2;
+    delete s1;
+    delete s2;
+    delete y1;
+    delete y2;
 
     return EXIT_SUCCESS;
 }
