@@ -328,7 +328,6 @@ public:
      * Constructeur de copie
      * @param o     Liste à copier
      */
-    // TODO: Utiliser iterateur
     List(const List<T>& o) : List() {
         Node *otherCurrent;
 
