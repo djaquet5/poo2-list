@@ -402,7 +402,7 @@ public:
             ++it;
         }
 
-        return it->data;
+        return *it;
     }
 
     /**
@@ -420,7 +420,7 @@ public:
             ++it;
         }
 
-        return it->data;
+        return *it;
     }
 
     /**
@@ -499,7 +499,6 @@ public:
      *
      * @param index     Index de l'élément à supprimer
      */
-    // TODO: utiliser iterateur
     void removeAt(size_t index) {
         Node *current;
 
@@ -602,7 +601,7 @@ public:
         ConstIterator it = begin();
 
         while(it != end()) {
-            if(it->data == o) {
+            if(*it == o) {
                 return index;
             }
             ++it;
