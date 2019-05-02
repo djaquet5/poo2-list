@@ -266,6 +266,9 @@ private:
         }
     }
 
+    /**
+     * Initialise la sentinelle se trouvant avant le head
+     */
     void initBeforeHead(){
         if (!head) {
             return;
@@ -283,6 +286,9 @@ private:
         head->prev = beforeHead;
     }
 
+    /**
+     * Initialise la sentinelle se trouvant après le dernir élément
+     */
     void initAfterLast(){
         if (!last) {
             return;
@@ -300,6 +306,9 @@ private:
         last->next = afterLast;
     }
 
+    /**
+     * Initialise les deux sentinelles
+     */
     void initSentinels() {
         initBeforeHead();
         initAfterLast();
@@ -616,6 +625,7 @@ public:
      *
      * @return      Référence sur le flux de sortie
      */
+    // `TODO: utiliser itérateurs
     friend std::ostream& operator << (std::ostream& os, const List& list) {
         ConstIterator it = list.begin();
 
